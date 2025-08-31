@@ -1,0 +1,40 @@
+name: App
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Install Android SDK
+        run: |
+          mkdir -p $ANDROID_HOME/licenses/
+          echo -e "\n8933bad161af4178b11852feb1726a9a37aeac48" > $ANDROID_HOME/licenses/android-sdk-license
+          echo -e "\n8483b67f70b419c8f251e60086806b4850974163" >> $ANDROID_HOME/licenses/android-sdk-license
+          sdkmanager "platforms;android-33" "build-tools;33.0.0"
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
