@@ -16,7 +16,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up proxy environment variables
-        # قم بتغيير 'http://your-proxy-host:port' بعنوان الوكيل الخاص بك
         env:
           HTTP_PROXY: http://your-proxy-host:port
           HTTPS_PROXY: http://your-proxy-host:port
