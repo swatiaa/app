@@ -23,10 +23,10 @@ jobs:
       # هذه هي الخطوة التي تضيف فيها الوكيل
       - name: Set up proxy for Gradle
         run: |
-          echo "systemProp.http.proxyHost=your-proxy-host" >> gradle.properties
-          echo "systemProp.http.proxyPort=your-proxy-port" >> gradle.properties
-          echo "systemProp.https.proxyHost=your-proxy-host" >> gradle.properties
-          echo "systemProp.https.proxyPort=your-proxy-port" >> gradle.properties
+          echo "systemProp.http.proxyHost=38.127.172.60" >> gradle.properties
+          echo "systemProp.http.proxyPort=24171" >> gradle.properties
+          echo "systemProp.https.proxyHost=38.127.172.60" >> gradle.properties
+          echo "systemProp.https.proxyPort=24171" >> gradle.properties
       
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
