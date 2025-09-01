@@ -31,8 +31,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
         
+      # هذه الخطوة ستقوم بإنشاء ملف APK
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew assembleDebug
 
       # هذه الخطوة ستقوم بتحميل ملف APK كـ "artifact"
       - name: Upload debug APK
@@ -40,3 +41,6 @@ jobs:
         with:
           name: app-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
+
+
+بعد نسخ هذا الكود بالكامل ولصقه في ملف `main.yml`، سيبدأ سير العمل مرة أخرى. هذه المرة، ستقوم خطوة البناء بإنشاء ملف `app-debug.apk`، وستتمكن خطوة التحميل من العثور عليه بنجاح.
