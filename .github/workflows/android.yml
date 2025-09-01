@@ -13,13 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: set up JDK 11
-        uses: actions/setup-java@v4
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-          cache: gradle
-
       # هذه هي الخطوة التي تضيف فيها الوكيل
       - name: Set up proxy for Gradle
         run: |
@@ -28,8 +21,22 @@ jobs:
           echo "systemProp.https.proxyHost=38.127.172.60" >> gradle.properties
           echo "systemProp.https.proxyPort=24171" >> gradle.properties
       
+      - name: set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
         
       - name: Build with Gradle
         run: ./gradlew build
+
+      # هذه الخطوة ستقوم بتحميل ملف APK كـ "artifact"
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
