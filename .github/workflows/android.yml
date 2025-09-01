@@ -21,10 +21,10 @@ jobs:
           echo "systemProp.https.proxyHost=38.127.172.60" >> gradle.properties
           echo "systemProp.https.proxyPort=24171" >> gradle.properties
       
-      - name: set up JDK 11
+      - name: set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
           cache: gradle
 
