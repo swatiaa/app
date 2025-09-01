@@ -1,25 +1,32 @@
-name: Checkout repository
+name: Build Android App with Proxy
 
-uses: actions/checkout@v2
+on:
+  push:
+    branches:
+      - main
 
-  - name: Set up proxy environment variables
-   # قم بتغيير 'http://your-proxy-host:port' بعنوان الوكيل الخاص بك
-   # Croxy لا يمكن استخدامه هنا مباشرةً
-   env:
-     HTTP_PROXY: http://your-proxy-host:port
-     HTTPS_PROXY: http://your-proxy-host:port
-     NO_PROXY: localhost,127.0.0.1,.local
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
- - name: Set up JDK 17
-   uses: actions/setup-java@v3
-   with:
-     java-version: '17'
-     distribution: 'temurin'
-     cache: gradle
+      - name: Set up proxy environment variables
+        env:
+          HTTP_PROXY: http://your-proxy-host:port
+          HTTPS_PROXY: http://your-proxy-host:port
+          NO_PROXY: localhost,127.0.0.1,.local
 
- - name: Grant execute permission for gradlew
-   run: chmod +x gradlew
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
 
- - name: Build with Gradle
-   # سيستخدم Gradle متغيرات البيئة الخاصة بالوكيل تلقائيًا
-   run: ./gradlew assembleDebug
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
